@@ -1,0 +1,12 @@
+.storybook
+.vscode
+.build
+.node_modules
+stories
+public
+scripts
+static
+src/libs
+src/migrations
+webpack.config.js
+jest.config.js
