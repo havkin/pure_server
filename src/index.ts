@@ -13,9 +13,6 @@ const routing = {
   // },
 };
 
-console.log(process.env.PORT);
-
-
 const server = createServer(async (req, res) => {
   const handler = routing[req.url];
   if (!handler) {
