@@ -1,11 +1,16 @@
 {
   "name": "pure_server",
   "version": "1.0.0",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "description": "",
   "scripts": {
-    "start": "yarn nodemon src/index.ts",
+    "dev": "yarn nodemon src/index.ts",
     "debug": "yarn nodemon --inspect src/index.ts",
-    "build": "yarn tsc"
+    "build": "yarn tsc",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",

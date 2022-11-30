@@ -1,24 +1,23 @@
 import { createServer } from 'http';
 
 import { port } from './config';
-
-const routing = {
-  '/api': async () => JSON.stringify({ api: true }),
-  // '/test': async () => {
-  //   let resData = { from: 'api' };
-  //   const response = await fetch(`${authApiUrl}/test`);
-  //   const parsedData = await response.json();
-  //   resData = { ...parsedData, ...resData };
-  //   return JSON.stringify(resData);
-  // },
-};
+import { router } from './router';
+import type { RouteHandler } from './types';
 
 const server = createServer(async (req, res) => {
-  const handler = routing[req.url];
+  const buffers = [];
+  for await (const chunk of req) {
+    buffers.push(chunk);
+  }
+  const body = Buffer.concat(buffers).toString();
+
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const handler: RouteHandler = router[url.pathname][req.method];
   if (!handler) {
     return res.end('Not found');
   }
-  const result = await handler();
+  const result = await handler({ body, query: url.searchParams });
+  res.setHeader('content-type', 'application/json');
   res.end(result);
 });
 server.listen(port, () => {
