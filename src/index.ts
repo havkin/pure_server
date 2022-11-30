@@ -1,18 +1,20 @@
 import Fastify from 'fastify';
+
+import { routes } from './router';
+
 const fastify = Fastify({
   logger: true,
 });
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
-
 const start = async () => {
+  await fastify.register(routes);
   try {
-    await fastify.listen({ port: 3000 });
+    const address = await fastify.listen({ port: 3000 });
+    // fastify.log.info(`server listening on ${address}`);
   } catch (error) {
     fastify.log.error(error);
     process.exit(1);
   }
 };
+
 void start();
