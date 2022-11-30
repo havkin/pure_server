@@ -2,9 +2,10 @@
   "name": "pure_server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +22,8 @@
     "eslint-plugin-unicorn": "^43.0.2",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "fastify": "^4.10.2"
   }
 }
