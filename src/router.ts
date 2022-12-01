@@ -3,46 +3,6 @@ import { randomUUID } from 'node:crypto';
 import { db } from './db';
 import type { RouteHandler } from './types';
 
-// export async function routes(fastify: FastifyInstance, options) {
-
-//   fastify.get<{ Params: { id: string } }>(
-//     '/courses/:id',
-//     async (request, reply) => {
-//       const res = db.find((item) => item.id === Number(request.params.id));
-//       if (!res) {
-//         throw new Error('No documents found');
-//       }
-//       return res;
-//     },
-//   );
-
-//   fastify.delete<{ Params: { id: string } }>(
-//     '/courses/:id',
-//     async (request, reply) => {
-//       const index = db.findIndex(
-//         (item) => item.id === Number(request.params.id),
-//       );
-//       if (index < 0) {
-//         throw new Error('No documents found');
-//       }
-//       db.splice(index, 1);
-//       return { index };
-//     },
-//   );
-
-//   fastify.put<{ Params: { id: string }; Body: { title: string } }>(
-//     '/courses/:id',
-//     async (request, reply) => {
-//       const index = db.findIndex(
-//         (item) => item.id === Number(request.params.id),
-//       );
-//       if (index < 0) {
-//         throw new Error('No documents found');
-//       }
-//       db[index].title = request.body.title;
-//       return db[index];
-//     },
-//   );
 const get: RouteHandler = async (data) => {
   let res = [...db];
   const title = data.query.get('title');
@@ -50,6 +10,39 @@ const get: RouteHandler = async (data) => {
     res = res.filter((item) => item.title.includes(title));
   }
   return JSON.stringify(res);
+};
+
+const getById: RouteHandler = async (data) => {
+  let res = [...db];
+  const id = data.params[0];
+  if (id) {
+    res = res.filter((item) => item.id === id);
+  }
+  return JSON.stringify(res);
+};
+
+const deleteItem: RouteHandler = async (data) => {
+  const id = data.params[0];
+  const index = db.findIndex((item) => item.id === id);
+  if (index < 0) {
+    throw new Error('No documents found');
+  }
+  db.splice(index, 1);
+
+  return JSON.stringify(db);
+};
+
+const put: RouteHandler = async (data) => {
+  const id = data.params[0];
+  const index = db.findIndex((item) => item.id === id);
+  if (index < 0) {
+    throw new Error('No documents found');
+  }
+  const body = JSON.parse(data.body);
+
+  db[index].title = body.title;
+
+  return JSON.stringify(db[index]);
 };
 
 const post: RouteHandler = async (data) => {
@@ -62,13 +55,18 @@ const post: RouteHandler = async (data) => {
   return JSON.stringify(newItem);
 };
 
+const getHandler = (paths: string[]): RouteHandler => {
+  const handlers = [get, getById];
+  return handlers[paths.length];
+};
+
 const coursesController = {
-  GET: get,
-  POST: post,
-  DELETE: '',
-  PUT: '',
+  GET: getHandler,
+  POST: () => post,
+  DELETE: () => deleteItem,
+  PUT: () => put,
 };
 
 export const router = {
-  '/courses': coursesController,
+  courses: coursesController,
 };

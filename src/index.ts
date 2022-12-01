@@ -12,11 +12,22 @@ const server = createServer(async (req, res) => {
   const body = Buffer.concat(buffers).toString();
 
   const url = new URL(req.url, `http://${req.headers.host}`);
-  const handler: RouteHandler = router[url.pathname][req.method];
+  const [controller, ...paths] = url.pathname
+    .split('/')
+    .filter((path) => path !== '');
+
+  console.log(req.method, url.pathname);
+
+  const handler: RouteHandler = router[controller]?.[req.method](paths);
+
   if (!handler) {
     return res.end('Not found');
   }
-  const result = await handler({ body, query: url.searchParams });
+  const result = await handler({
+    body,
+    query: url.searchParams,
+    params: paths,
+  });
   res.setHeader('content-type', 'application/json');
   res.end(result);
 });
