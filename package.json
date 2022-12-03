@@ -11,7 +11,7 @@
     "debug": "yarn nodemon --inspect src/index.ts",
     "build": "yarn tsc",
     "start": "node .",
-    "lint:write": "eslint --debug --quiet src/",
+    "lint:write": "eslint --quiet src/",
     "prepare": "husky install"
   },
   "author": "",
