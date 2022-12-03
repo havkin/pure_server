@@ -10,7 +10,9 @@
     "dev": "yarn nodemon src/index.ts",
     "debug": "yarn nodemon --inspect src/index.ts",
     "build": "yarn tsc",
-    "start": "node ."
+    "start": "node .",
+    "lint:write": "eslint --debug --quiet src/",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unicorn": "^43.0.2",
+    "husky": "^8.0.2",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
