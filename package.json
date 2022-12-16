@@ -11,7 +11,9 @@
     "debug": "yarn nodemon --inspect src/index.ts",
     "build": "yarn tsc",
     "start": "node .",
-    "test": "mocha"
+    "test": "mocha",
+    "lint:write": "eslint --quiet src/",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +29,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unicorn": "^43.0.2",
     "mocha": "^10.2.0",
+    "husky": "^8.0.2",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
