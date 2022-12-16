@@ -10,7 +10,8 @@
     "dev": "yarn nodemon src/index.ts",
     "debug": "yarn nodemon --inspect src/index.ts",
     "build": "yarn tsc",
-    "start": "node ."
+    "start": "node .",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unicorn": "^43.0.2",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
