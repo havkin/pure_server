@@ -4,7 +4,7 @@ import { port } from './config';
 import { router } from './router';
 import type { RouteHandler } from './types';
 
-const server = createServer(async (req, res) => {
+export const server = createServer(async (req, res) => {
   const buffers = [];
   for await (const chunk of req) {
     buffers.push(chunk);
