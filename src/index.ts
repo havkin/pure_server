@@ -1,4 +1,4 @@
-import { createServer } from 'http';
+import { createServer } from 'node:http';
 
 import { port } from './config';
 import { router } from './router';
