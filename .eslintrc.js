@@ -374,5 +374,12 @@ module.exports = {
     'node/no-callback-literal': 'error',
     'node/no-sync': 'error',
     '@typescript-eslint/promise-function-async': 'error',
+
+    'node/no-unpublished-import': [
+      'error',
+      {
+        allowModules: ['dotenv', 'esbuild', 'dotenv-esbuild'],
+      },
+    ],
   },
 };

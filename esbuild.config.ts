@@ -1,13 +1,11 @@
+import Dotenv from 'dotenv-esbuild';
 import ESBuild from 'esbuild';
 import { rm } from 'node:fs/promises';
 import path from 'node:path';
 
-const CleanPlugin: ESBuild.Plugin = {
+const cleanPlugin: ESBuild.Plugin = {
   name: 'CleanPlugin',
   setup(build) {
-    // Intercept import paths called "env" so esbuild doesn't attempt
-    // to map them to a file system location. Tag them with the "env-ns"
-    // namespace to reserve them for this plugin.
     build.onStart(async () => {
       try {
         const outdir = build.initialOptions.outdir;
@@ -36,7 +34,7 @@ ESBuild.build({
   sourcemap: isDev,
   tsconfig: path.resolve(__dirname, 'tsconfig.json'),
   platform: 'node',
-  plugins: [CleanPlugin],
+  plugins: [cleanPlugin, new Dotenv()],
 }).catch((error) => {
   console.log(error);
 });
