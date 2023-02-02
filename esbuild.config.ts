@@ -22,7 +22,6 @@ const cleanPlugin: ESBuild.Plugin = {
 const mode = process.env.NODE_ENV || 'development';
 
 const isDev = mode === 'development';
-const isProd = mode === 'production';
 
 ESBuild.build({
   entryPoints: [path.resolve(__dirname, 'src', 'index.ts')],
@@ -30,7 +29,6 @@ ESBuild.build({
   entryNames: 'app.bundle',
   bundle: true,
   target: 'node16',
-  minify: isProd,
   sourcemap: isDev,
   tsconfig: path.resolve(__dirname, 'tsconfig.json'),
   platform: 'node',

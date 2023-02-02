@@ -1,10 +1,10 @@
 import * as assert from 'node:assert';
-import * as supertest from 'supertest';
+import supertest from 'supertest';
 
-import { server } from '../src';
+import { server } from '../src/server';
 
-// const request = supertest(server);
-const request = supertest('http://localhost:3000');
+const request = supertest(server);
+// const request = supertest('http://localhost:3000');
 
 describe('GET /courses', function () {
   it('', async function () {
