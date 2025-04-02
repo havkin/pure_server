@@ -1,9 +1,8 @@
 import { createServer } from 'node:http';
 
-import { port } from './config';
-import { MIME_TYPES, prepareFile } from './config/lib';
-import { router } from './router';
-import type { RouteHandler } from './types';
+import { MIME_TYPES, prepareFile } from './config/lib.ts';
+import { router } from './router.ts';
+import type { RouteHandler } from './types.ts';
 
 export const server = createServer(async (req, res) => {
   const buffers = [];

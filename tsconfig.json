@@ -19,7 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     // Обязательное поле при использовании с esbuild
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "ts-node": {
     "compilerOptions": {

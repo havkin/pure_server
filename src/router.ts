@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { randomUUID } from 'node:crypto';
 
-import { db } from './db';
-import type { RouteHandler } from './types';
+import { db } from './db.ts';
+import type { RouteHandler } from './types.ts';
 
 const get: RouteHandler = async (data) => {
   let res = [...db];
