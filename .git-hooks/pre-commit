@@ -1,0 +1,27 @@
+#!/bin/bash
+echo -e "\033[1;92m Linting Staged Files . . . "
+
+root=`git rev-parse --show-toplevel`
+
+fileNames=$(git diff --diff-filter=d --cached --name-only| grep -E '\.(ts)$')
+
+if [[ $fileNames = "" ]] ; then
+  echo -e "\033[1;31m You have no staged file, exiting . . "
+  exit 0
+fi
+
+files=""
+COUNTER=0
+for fileName in $fileNames
+do
+   files="$files $root/$fileName"
+   let COUNTER++
+done
+
+if [ $COUNTER -gt 50 ]
+then
+    echo -e "\033[1;31m You have too many files (max 50), exiting . . "
+    exit 0
+fi
+
+npm run lint:write -- $files

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { randomUUID } from 'node:crypto';
 
-import { db } from './db.ts';
-import type { RouteHandler } from './types.ts';
+import { db } from './db';
+import type { RouteHandler } from './types';
 
 const get: RouteHandler = async (data) => {
   let res = [...db];
@@ -39,7 +39,7 @@ const put: RouteHandler = async (data) => {
   if (index < 0) {
     throw new Error('No documents found');
   }
-  const body = JSON.parse(data.body);
+  const body: Record<string, string> = JSON.parse(data.body);
 
   db[index].title = body.title;
 
@@ -47,7 +47,7 @@ const put: RouteHandler = async (data) => {
 };
 
 const post: RouteHandler = async (data) => {
-  const body = JSON.parse(data.body);
+  const body: Record<string, string> = JSON.parse(data.body);
   const newItem = {
     id: randomUUID(),
     title: body.title,

@@ -1,39 +1,39 @@
 {
   "name": "pure_server",
   "version": "1.0.0",
-  "main": "dist/src/index.js",
-  "type": "module",
+  "main": "index.js",
   "engines": {
     "node": ">=22.9.0"
   },
   "description": "",
   "scripts": {
-    "dev": "node --env-file=.env --experimental-strip-types --watch --inspect src/index.ts",
+    "dev": "node --env-file=.env --watch --inspect -r ts-node/register src/index.ts",
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "start": "node --env-file=.env --experimental-strip-types src/index.ts",
+    "start": "node --env-file=.env dist/src/",
     "test": "mocha",
-    "lint:write": "eslint --quiet src/"
+    "lint:write": "npx eslint --fix --quiet"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.23.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^22.13.17",
-    "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.24.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unicorn": "^43.0.2",
+    "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^16.0.0",
     "mocha": "^10.2.0",
-    "prettier": "^2.7.1",
+    "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
-    "supertest": "^6.3.3",
-    "typescript": "^5.8.2"
+    "supertest": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
   }
 }

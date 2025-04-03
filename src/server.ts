@@ -1,9 +1,10 @@
 import { createServer } from 'node:http';
 
-import { MIME_TYPES, prepareFile } from './config/lib.ts';
-import { router } from './router.ts';
-import type { RouteHandler } from './types.ts';
+import { MIME_TYPES, prepareFile } from './config/lib';
+import { router } from './router';
+import type { RouteHandler } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 export const server = createServer(async (req, res) => {
   const buffers = [];
   for await (const chunk of req) {
@@ -28,6 +29,7 @@ export const server = createServer(async (req, res) => {
 
   console.log(req.method, url.pathname);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   const handler: RouteHandler = router[controller]?.[req.method](paths);
 
   if (!handler) {
