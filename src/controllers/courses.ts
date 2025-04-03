@@ -1,0 +1,69 @@
+import { randomUUID } from 'node:crypto';
+
+import { IController, RouteHandler } from 'src/types';
+
+import { db } from '../db';
+
+const get: RouteHandler = (data) => {
+  let res = [...db];
+  const title = data.query.get('title');
+  if (title) {
+    res = res.filter((item) => item.title.includes(title));
+  }
+  return JSON.stringify(res);
+};
+
+const getById: RouteHandler = (data) => {
+  let res = [...db];
+  const id = data.params[0];
+  if (id) {
+    res = res.filter((item) => item.id === id);
+  }
+  return JSON.stringify(res);
+};
+
+const deleteItem: RouteHandler = (data) => {
+  const id = data.params[0];
+  const index = db.findIndex((item) => item.id === id);
+  if (index < 0) {
+    throw new Error('No documents found');
+  }
+  db.splice(index, 1);
+
+  return JSON.stringify(db);
+};
+
+const put: RouteHandler = (data) => {
+  const id = data.params[0];
+  const index = db.findIndex((item) => item.id === id);
+  if (index < 0) {
+    throw new Error('No documents found');
+  }
+  const body = JSON.parse(data.body) as Record<string, string>;
+
+  db[index].title = body.title;
+
+  return JSON.stringify(db[index]);
+};
+
+const post: RouteHandler = (data) => {
+  const body = JSON.parse(data.body) as Record<string, string>;
+  const newItem = {
+    id: randomUUID(),
+    title: body.title,
+  };
+  db.push(newItem);
+  return JSON.stringify(newItem);
+};
+
+const getHandler = (paths: string[]): RouteHandler => {
+  const handlers = [get, getById];
+  return handlers[paths.length];
+};
+
+export const coursesController: IController = {
+  GET: getHandler,
+  POST: () => post,
+  DELETE: () => deleteItem,
+  PUT: () => put,
+};

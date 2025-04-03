@@ -1,4 +1,4 @@
-import { port } from './config/index';
+import { port } from './config';
 import { server } from './server';
 
 server.listen(port, () => {

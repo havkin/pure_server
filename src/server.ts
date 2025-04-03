@@ -1,8 +1,8 @@
 import { createServer } from 'node:http';
 
 import { MIME_TYPES, prepareFile } from './config/lib';
-import { router } from './router';
-import type { RouteHandler } from './types';
+import { getRouteHandler } from './router';
+import type { IController, RouteHandler } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 export const server = createServer(async (req, res) => {
@@ -13,13 +13,11 @@ export const server = createServer(async (req, res) => {
   const body = Buffer.concat(buffers).toString();
 
   const url = new URL(req.url, `http://${req.headers.host}`);
-  const [controller, ...paths] = url.pathname
-    .split('/')
-    .filter((path) => path !== '');
+  const [controller, ...paths] = url.pathname.split('/').filter((path) => path !== '');
 
-  if (!controller || controller.includes('.')) {
+  if (req.method === 'GET' && (!controller || controller.includes('.'))) {
     const file = await prepareFile(req.url);
-    const statusCode = file.found ? 200 : 404;
+    const statusCode = file.isFound ? 200 : 404;
     const mimeType = MIME_TYPES[file.ext] || MIME_TYPES.default;
     res.writeHead(statusCode, { 'Content-Type': mimeType });
     file.stream.pipe(res);
@@ -29,10 +27,10 @@ export const server = createServer(async (req, res) => {
 
   console.log(req.method, url.pathname);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-  const handler: RouteHandler = router[controller]?.[req.method](paths);
+  const handler: RouteHandler = getRouteHandler(url, req.method as keyof IController);
 
   if (!handler) {
+    res.statusCode = 404;
     return res.end('Not found');
   }
   const result = await handler({

@@ -14,7 +14,7 @@
     "test": "mocha",
     "lint:write": "npx eslint --fix --quiet"
   },
-  "author": "",
+  "author": "Max Havkin",
   "license": "ISC",
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

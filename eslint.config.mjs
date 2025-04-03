@@ -37,6 +37,53 @@ export default tseslint.config(
       "@typescript-eslint/no-redundant-type-constituents": 'off',
       "@typescript-eslint/no-unsafe-return": 'off',
       "@typescript-eslint/no-unsafe-assignment": 'warn',
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          "selector": [
+            "objectLiteralProperty",
+          ],
+          "format": null,
+        },
+        {
+          selector: 'default',
+          format: ['camelCase', 'PascalCase', 'snake_case', 'UPPER_CASE'],
+          filter: {
+            regex: '^_.*$',
+            match: false,
+          },
+        },
+        {
+          selector: 'variable',
+          format: ['camelCase', 'UPPER_CASE', 'snake_case','PascalCase'],
+          leadingUnderscore: 'allow',
+        },
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+        },
+        {
+          selector: 'typeLike',
+          format: ['PascalCase'],
+        },
+        {
+          selector: 'memberLike',
+          modifiers: ['private'],
+          format: ['camelCase'],
+          leadingUnderscore: 'forbid',
+        },
+        {
+          selector: 'variable',
+          types: ['boolean'],
+          format: ['PascalCase'],
+          prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
+          filter: {
+            regex: '^result$',
+            match: false,
+          },
+        },
+      ],
     },
   },
 );
