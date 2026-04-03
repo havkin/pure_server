@@ -6,7 +6,7 @@ export const router: Router = {
   courses: coursesController,
 };
 
-export const getRouteHandler = (url: URL, method: keyof IController): RouteHandler | undefined => {
+export const getRouteHandler = (url: URL, method: keyof IController): RouteHandler | null => {
   const [controller, ...paths] = url.pathname.split('/').filter((path) => path !== '');
   if (controller in router) {
     return router[controller][method](paths);

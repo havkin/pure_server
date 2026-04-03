@@ -6,7 +6,7 @@ import { db } from '../db';
 
 const get: RouteHandler = (data) => {
   let res = [...db];
-  const title = data.query.get('title');
+  const title = data.query?.get('title');
   if (title) {
     res = res.filter((item) => item.title.includes(title));
   }
@@ -39,6 +39,9 @@ const put: RouteHandler = (data) => {
   if (index < 0) {
     throw new Error('No documents found');
   }
+  if (!data.body) {
+    throw new Error('Body required');
+  }
   const body = JSON.parse(data.body) as Record<string, string>;
 
   db[index].title = body.title;
@@ -47,6 +50,9 @@ const put: RouteHandler = (data) => {
 };
 
 const post: RouteHandler = (data) => {
+  if (!data.body) {
+    throw new Error('Body required');
+  }
   const body = JSON.parse(data.body) as Record<string, string>;
   const newItem = {
     id: randomUUID(),

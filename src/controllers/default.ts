@@ -5,17 +5,17 @@ const getVersion: RouteHandler = () => {
   return JSON.stringify({ apiVersion: version });
 };
 
-const getHandler = (paths: string[]): RouteHandler | undefined => {
-  const handlers = { version: getVersion };
+const getHandler = (paths: string[]): RouteHandler | null => {
+  const handlers: Record<string, RouteHandler> = { version: getVersion };
   if (paths[0] in handlers) {
     return handlers[paths[0]];
   }
-  return undefined;
+  return null;
 };
 
 export const defaultController: IController = {
   GET: getHandler,
-  POST: () => undefined,
-  DELETE: () => undefined,
-  PUT: () => undefined,
+  POST: () => null,
+  DELETE: () => null,
+  PUT: () => null,
 };
