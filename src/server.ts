@@ -25,19 +25,19 @@ export const server = createServer(async (req, res) => {
     return;
   }
 
-  console.log(req.method, url.pathname);
-
   const handler = getRouteHandler(url, req.method as keyof IController);
 
   if (!handler) {
     res.statusCode = 404;
-    return res.end('Not found');
+    res.end('Not found');
+  } else {
+    const result = await handler({
+      body,
+      query: url.searchParams,
+      params: paths,
+    });
+    res.setHeader('content-type', 'application/json');
+    res.end(result);
   }
-  const result = await handler({
-    body,
-    query: url.searchParams,
-    params: paths,
-  });
-  res.setHeader('content-type', 'application/json');
-  res.end(result);
+  console.log(req.method, url.pathname, res.statusCode);
 });

@@ -1,8 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
-import { IController, RouteHandler } from 'src/types';
-
 import { db } from '../db';
+import { IController, RouteHandler } from '../types';
 
 const get: RouteHandler = (data) => {
   let res = [...db];

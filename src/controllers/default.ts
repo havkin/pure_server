@@ -1,4 +1,4 @@
-import { IController, RouteHandler } from 'src/types';
+import { IController, RouteHandler } from '../types';
 
 const getVersion: RouteHandler = () => {
   const version = process.env.npm_package_version;
